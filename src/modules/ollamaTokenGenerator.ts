@@ -1,4 +1,5 @@
 import { lineGenerator } from "./lineGenerator";
+import { info } from "./log";
 
 export type OllamaToken = {
     model: string,
@@ -8,6 +9,7 @@ export type OllamaToken = {
 
 export async function* ollamaTokenGenerator(url: string, data: any): AsyncGenerator<OllamaToken> {
     for await (let line of lineGenerator(url, data)) {
+        info('Receive line: ' + line);
         let parsed: OllamaToken;
         try {
             parsed = JSON.parse(line) as OllamaToken;
