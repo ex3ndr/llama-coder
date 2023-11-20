@@ -1,8 +1,7 @@
 require('dotenv').config();
 import express from 'express';
 import bodyParser from 'body-parser';
-import axios from 'axios';
-import { autocomplete } from './models/autocomplete';
+import { autocomplete } from './prompts/autocomplete';
 console.log('Starting Ollama Proxy...');
 
 // Model
@@ -21,11 +20,11 @@ app.post('/api/generate', (req, res) => {
     console.log('Requested: inputs = ' + body.inputs);
     (async () => {
         try {
-            console.warn('generating...');
             let ai = await autocomplete({
                 endpoint: ENV_ENDPOINT,
                 model: ENV_MODEL,
-                prompt: body.inputs
+                prefix: body.inputs,
+                suffix: ''
             });
             res.status(200).send({ generated_text: ai });
         } catch (e) {

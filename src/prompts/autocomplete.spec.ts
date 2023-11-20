@@ -8,7 +8,8 @@ describe('autocomplete', () => {
         let result = await autocomplete({
             endpoint,
             model,
-            prompt
+            prefix: prompt,
+            suffix: ''
         });
         console.warn(result);
     });

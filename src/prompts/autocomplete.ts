@@ -4,7 +4,8 @@ import { countLines, trimEndBlank } from '../modules/text';
 export async function autocomplete(args: {
     endpoint: string,
     model: string,
-    prompt: string
+    prefix: string,
+    suffix: string
 }) {
 
     // Calculate url
@@ -17,7 +18,7 @@ export async function autocomplete(args: {
     // Calculate arguments
     let data = {
         model: args.model,
-        prompt: args.prompt,
+        prompt: args.prefix + args.suffix,
         raw: true,
         options: {
             num_predict: 256
