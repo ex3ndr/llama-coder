@@ -1,15 +1,17 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "module": "commonjs",
-        "sourceMap": true,
-        "outDir": "./lib",
-        "downlevelIteration": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "skipLibCheck": true
-    }
+	"compilerOptions": {
+		"module": "Node16",
+		"target": "ES2022",
+		"outDir": "out",
+		"lib": [
+			"ES2022"
+		],
+		"sourceMap": true,
+		"rootDir": "src",
+		"strict": true   /* enable all strict type-checking options */
+		/* Additional Checks */
+		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
+		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
+		// "noUnusedParameters": true,  /* Report errors on unused parameters. */
+	}
 }

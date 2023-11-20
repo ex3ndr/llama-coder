@@ -23,7 +23,7 @@ export async function autocomplete(args: {
         options: {
             num_predict: 256
         }
-    }
+    };
 
     // Receiving tokens
     let res = '';
