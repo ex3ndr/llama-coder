@@ -1,5 +1,5 @@
 export function countLines(src: string) {
-    return src.split('\n').length;
+    return countSymbol(src, '\n') + 1;
 }
 
 export function isBlank(src: string) {
@@ -53,4 +53,14 @@ export function trimEndBlank(src: string) {
         }
     }
     return lines.join('\n');
+}
+
+export function countSymbol(src: string, char: string) {
+    let res = 0;
+    for (let i = 0; i < src.length; i++) {
+        if (src[i] === char) {
+            res++;
+        }
+    }
+    return res;
 }

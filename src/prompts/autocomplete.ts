@@ -1,6 +1,6 @@
 import type vscode from 'vscode';
 import { ollamaTokenGenerator } from '../modules/ollamaTokenGenerator';
-import { countLines, trimEndBlank } from '../modules/text';
+import { countLines, countSymbol, trimEndBlank } from '../modules/text';
 import { info } from '../modules/log';
 
 export function isSupported(doc: vscode.TextDocument) {
@@ -26,7 +26,6 @@ export async function autocomplete(args: {
     let data = {
         model: args.model,
         prompt: `<PRE> ${args.prefix} <SUF>${args.suffix} <MID>`, // Codellama format
-        raw: true,
         options: {
             num_predict: 256
         }
@@ -34,19 +33,70 @@ export async function autocomplete(args: {
 
     // Receiving tokens
     let res = '';
-    for await (let tokens of ollamaTokenGenerator(url, data)) {
+    let totalLines = 1;
+    let blockStack: ('[' | '(' | '{')[] = [];
+    outer: for await (let tokens of ollamaTokenGenerator(url, data)) {
         if (args.canceled && args.canceled()) {
             break;
         }
-        res += tokens.response;
-        if (countLines(res) > 3) {
+
+        // Block stack
+        for (let c of tokens.response) {
+
+            // Open block
+            if (c === '[') {
+                blockStack.push('[');
+            } else if (c === '(') {
+                blockStack.push('(');
+            }
+            if (c === '{') {
+                blockStack.push('{');
+            }
+
+            // Close block
+            if (c === ']') {
+                if (blockStack.length > 0 && blockStack[blockStack.length - 1] === '[') {
+                    blockStack.pop();
+                } else {
+                    info('Block stack error, breaking.');
+                    break outer;
+                }
+            }
+            if (c === ')') {
+                if (blockStack.length > 0 && blockStack[blockStack.length - 1] === '(') {
+                    blockStack.pop();
+                } else {
+                    info('Block stack error, breaking.');
+                    break outer;
+                }
+            }
+            if (c === '}') {
+                if (blockStack.length > 0 && blockStack[blockStack.length - 1] === '{') {
+                    blockStack.pop();
+                } else {
+                    info('Block stack error, breaking.');
+                    break outer;
+                }
+            }
+
+            // Append charater
+            res += c;
+        }
+
+        // Update total lines
+        totalLines += countSymbol(tokens.response, '\n');
+
+        // Break if too many lines and on top level
+        if (totalLines > 16 && blockStack.length === 0) {
             info('Too many lines, breaking.');
             break;
         }
     }
 
-    // Trim empty lines
-    // res = trimEndBlank(res);
+    // Remove <EOT>
+    if (res.endsWith('<EOT>')) {
+        res = res.slice(0, res.length - 5);
+    }
 
     return res;
 }
