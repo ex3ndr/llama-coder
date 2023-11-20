@@ -8,7 +8,13 @@ export type OllamaToken = {
 
 export async function* ollamaTokenGenerator(url: string, data: any): AsyncGenerator<OllamaToken> {
     for await (let line of lineGenerator(url, data)) {
-        let parsed = JSON.parse(line) as OllamaToken;
+        let parsed: OllamaToken;
+        try {
+            parsed = JSON.parse(line) as OllamaToken;
+        } catch (e) { 
+            console.warn('Receive wrong line: ' + line);
+            continue;
+        }
         yield parsed;
     }
 }

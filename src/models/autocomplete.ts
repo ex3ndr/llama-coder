@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { ollamaTokenGenerator } from '../modules/ollamaTokenGenerator';
+import { countLines, trimEndBlank } from '../modules/text';
 
 export async function autocomplete(args: {
     endpoint: string,
@@ -29,7 +29,14 @@ export async function autocomplete(args: {
     for await (let tokens of ollamaTokenGenerator(url, data)) {
         console.warn(tokens);
         res += tokens.response;
+        if (countLines(res) > 3) {
+            console.warn('break');
+            break;
+        }
     }
+
+    // Trim empty lines
+    res = trimEndBlank(res);
 
     return res;
 }

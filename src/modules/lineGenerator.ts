@@ -1,16 +1,16 @@
 export async function* lineGenerator(url: string, data: any): AsyncGenerator<string> {
 
     // Request
+    const controller = new AbortController();
     let res = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
         },
+        signal: controller.signal
     });
     if (!res.ok || !res.body) {
-        const json = await res.json();
-        console.warn(json);
         throw Error('Unable to connect to backend');
     }
 
@@ -31,9 +31,11 @@ export async function* lineGenerator(url: string, data: any): AsyncGenerator<str
             }
 
             // Append chunk
-            pending += decoder.decode(value);
+            let chunk = decoder.decode(value);
+            console.warn(chunk);
+            pending += chunk;
 
-            // Yield results
+            // Yield results 
             while (pending.indexOf('\n') >= 0) {
                 let offset = pending.indexOf('\n');
                 yield pending.slice(0, offset);
@@ -43,7 +45,8 @@ export async function* lineGenerator(url: string, data: any): AsyncGenerator<str
     } finally {
         stream.releaseLock();
         if (!stream.closed) { // Stop generation
-            stream.cancel();
+            await stream.cancel();
         }
+        controller.abort();
     }
 }
