@@ -27,15 +27,18 @@ Install [Ollama](https://ollama.ai) on dedicated machine and configure endpoint 
 
 Currently Llama Coder supports only Codellama. Model is quantized in different ways, but our tests shows that `q4` is an optimal way to run network. When selecting model the bigger the model is, it performs better. Always pick the model with the biggest size and the biggest possible quantization for your machine. Default one is `codellama:7b-code-q4_K_M` and should work everywhere, `codellama:34b-code-q4_K_M` is the best possible one.
 
-| Name                      | RAM/VRAM |
-|---------------------------|----------|
-| codellama:7b-code-q4_K_M  | 5GB      |
-| codellama:7b-code-q6_K    | 6GB      |
-| codellama:7b-code-fp16    | 14GB     |
-| codellama:13b-code-q4_K_M | 10GB     |
-| codellama:13b-code-q6_K   | 14GB     |
-| codellama:34b-code-q4_K_M | 24GB     |
-| codellama:34b-code-q6_K   | 32GB     |
+| Name                      | RAM/VRAM | Notes |
+|---------------------------|----------|-------|
+| codellama:7b-code-q4_K_M  | 5GB      |       |
+| codellama:7b-code-q6_K    | 6GB      | m     |
+| codellama:7b-code-fp16    | 14GB     | g     |
+| codellama:13b-code-q4_K_M | 10GB     |       |
+| codellama:13b-code-q6_K   | 14GB     | m     |
+| codellama:34b-code-q4_K_M | 24GB     |       |
+| codellama:34b-code-q6_K   | 32GB     | m     |
+
+* m - slow on MacOS
+* g - slow on older NVidia cards (pre 30xx)
 
 ## License
 
