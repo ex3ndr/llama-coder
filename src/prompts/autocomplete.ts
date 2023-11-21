@@ -1,11 +1,6 @@
-import type vscode from 'vscode';
 import { ollamaTokenGenerator } from '../modules/ollamaTokenGenerator';
 import { countSymbol } from '../modules/text';
 import { info } from '../modules/log';
-
-export function isSupported(doc: vscode.TextDocument) {
-    return doc.uri.scheme === 'file';
-}
 
 export async function autocomplete(args: {
     endpoint: string,
@@ -13,19 +8,13 @@ export async function autocomplete(args: {
     prefix: string,
     suffix: string,
     canceled?: () => boolean,
-}) {
-
-    // Calculate url
-    let url = args.endpoint;
-    if (url.endsWith('/')) {
-        url = url.slice(0, url.length - 1);
-    }
-    url = url + '/api/generate';
+}): Promise<string> {
 
     // Calculate arguments
     let data = {
         model: args.model,
         prompt: `<PRE> ${args.prefix} <SUF>${args.suffix} <MID>`, // Codellama format
+        raw: true,
         options: {
             num_predict: 256
         }
@@ -35,7 +24,7 @@ export async function autocomplete(args: {
     let res = '';
     let totalLines = 1;
     let blockStack: ('[' | '(' | '{')[] = [];
-    outer: for await (let tokens of ollamaTokenGenerator(url, data)) {
+    outer: for await (let tokens of ollamaTokenGenerator(args.endpoint + '/api/generate', data)) {
         if (args.canceled && args.canceled()) {
             break;
         }

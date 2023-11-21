@@ -2,7 +2,7 @@
   "name": "llama-coder",
   "displayName": "Llama Coder",
   "description": "Local AI coding assistant",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "icon": "icon.png",
   "publisher": "ex3ndr",
   "repository": {
@@ -44,10 +44,16 @@
           "inference.model": {
             "type": "string",
             "enum": [
-              "codellama:7b-code-q4_K_S",
-              "codellama:13b-code-q6_K"
+              "codellama:7b-code-q4_K_M",
+              "codellama:7b-code-q6_K",
+              "codellama:7b-code-fp16",
+              "codellama:13b-code-q4_K_M",
+              "codellama:13b-code-q6_K",
+              "codellama:13b-code-fp16",
+              "codellama:34b-code-q4_K_M",
+              "codellama:34b-code-q6_K"
             ],
-            "default": "codellama:7b-code-q4_K_S",
+            "default": "codellama:7b-code-q4_K_M",
             "description": "Inference model to use"
           }
         }

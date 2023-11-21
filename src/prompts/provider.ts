@@ -1,18 +1,33 @@
 import vscode from 'vscode';
 import { info } from '../modules/log';
-import { autocomplete, isSupported } from './autocomplete';
+import { autocomplete } from './autocomplete';
 import { preparePrompt } from './preparePrompt';
 import { AsyncLock } from '../modules/lock';
+import { getFromPromptCache, setPromptToCache } from './promptCache';
+import { isNotNeeded, isSupported } from './filter';
+import { ollamaCheckModel } from '../modules/ollamaCheckModel';
+import { ollamaDownloadModel } from '../modules/ollamaDownloadModel';
 
 export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
     lock = new AsyncLock();
+    statusbar: vscode.StatusBarItem;
+
+    constructor(statusbar: vscode.StatusBarItem) {
+        this.statusbar = statusbar;
+    }
 
     async provideInlineCompletionItems(document: vscode.TextDocument, position: vscode.Position, context: vscode.InlineCompletionContext, token: vscode.CancellationToken): Promise<vscode.InlineCompletionItem[] | vscode.InlineCompletionList | undefined | null> {
 
         // Ignore unsupported documents
         if (!isSupported(document)) {
             info(`Unsupported document: ${document.uri.toString()} ignored.`);
+            return;
+        }
+
+        // Ignore if not needed
+        if (isNotNeeded(document, position)) {
+            info('No inline completion required');
             return;
         }
 
@@ -24,6 +39,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
         // Execute in lock
         return await this.lock.inLock(async () => {
+
             // Prepare context
             let prepared = await preparePrompt(document, position, context);
             if (token.isCancellationRequested) {
@@ -31,29 +47,80 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                 return;
             }
 
-            // Config
-            let config = vscode.workspace.getConfiguration('inference');
-            info(`Config: ${JSON.stringify(config)}`);
-            let endpoint = config.get('endpoint') as string;
-            let model = config.get('model') as string;
+            // Result
+            let res: string | null = null;
 
-            // Run AI completion
-            info(`Running AI completion...`);
-            let res = await autocomplete({
+            // Check if in cache
+            let cached = getFromPromptCache({
                 prefix: prepared.prefix,
-                suffix: prepared.suffix,
-                endpoint: endpoint,
-                model: model,
-                canceled: () => token.isCancellationRequested,
+                suffix: prepared.suffix
             });
+
+            // If not cached
+            if (cached === undefined) {
+
+                // Config
+                let config = vscode.workspace.getConfiguration('inference');
+                let endpoint = config.get('endpoint') as string;
+                let model = config.get('model') as string;
+                if (endpoint.endsWith('/')) {
+                    endpoint = endpoint.slice(0, endpoint.length - 1);
+                }
+
+                // Update status
+                this.statusbar.text = `$(sync~spin) Llama Coder`;
+                try {
+
+                    // Check model exists
+                    let modelExists = await ollamaCheckModel(endpoint, model);
+                    if (token.isCancellationRequested) {
+                        info(`Canceled after AI completion.`);
+                        return;
+                    }
+
+                    // Download model if not exists
+                    if (!modelExists) {
+                        this.statusbar.text = `$(sync~spin) Downloading`;
+                        await ollamaDownloadModel(endpoint, model);
+                        this.statusbar.text = `$(sync~spin) Llama Coder`;
+                    }
+                    if (token.isCancellationRequested) {
+                        info(`Canceled after AI completion.`);
+                        return;
+                    }
+
+                    // Run AI completion
+                    info(`Running AI completion...`);
+                    res = await autocomplete({
+                        prefix: prepared.prefix,
+                        suffix: prepared.suffix,
+                        endpoint: endpoint,
+                        model: model,
+                        canceled: () => token.isCancellationRequested,
+                    });
+                    info(`AI completion completed: ${res}`);
+
+                    // Put to cache
+                    setPromptToCache({
+                        prefix: prepared.prefix,
+                        suffix: prepared.suffix,
+                        value: res
+                    });
+                } finally {
+                    this.statusbar.text = `$(chip) Llama Coder`;
+                }
+            } else {
+                if (cached !== null) {
+                    res = cached;
+                }
+            }
             if (token.isCancellationRequested) {
                 info(`Canceled after AI completion.`);
                 return;
             }
-            info(`AI completion completed: ${res}`);
 
             // Return result
-            if (res.trim() !== '') {
+            if (res && res.trim() !== '') {
                 return [{
                     insertText: res,
                     range: new vscode.Range(position, position),
