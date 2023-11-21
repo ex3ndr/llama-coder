@@ -1,8 +1,8 @@
 {
   "name": "llama-coder",
-  "displayName": "llama-coder",
+  "displayName": "Llama Coder",
   "description": "Local AI coding assistant",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "icon.png",
   "publisher": "ex3ndr",
   "repository": {
