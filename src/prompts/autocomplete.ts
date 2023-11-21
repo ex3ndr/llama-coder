@@ -1,10 +1,10 @@
 import type vscode from 'vscode';
 import { ollamaTokenGenerator } from '../modules/ollamaTokenGenerator';
-import { countLines, countSymbol, trimEndBlank } from '../modules/text';
+import { countSymbol } from '../modules/text';
 import { info } from '../modules/log';
 
 export function isSupported(doc: vscode.TextDocument) {
-    return doc.uri.scheme === 'file' && doc.languageId === 'typescript';
+    return doc.uri.scheme === 'file';
 }
 
 export async function autocomplete(args: {
