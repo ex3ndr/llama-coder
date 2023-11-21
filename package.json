@@ -27,7 +27,7 @@
     "vscode": "^1.84.0"
   },
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
