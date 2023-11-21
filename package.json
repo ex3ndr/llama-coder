@@ -4,6 +4,7 @@
   "description": "Local AI coding assistant",
   "version": "0.0.1",
   "icon": "icon.png",
+  "publisher": "ex3ndr",
   "repository": {
     "type": "git",
     "url": "https://github.com/ex3ndr/llama-coder.git"
