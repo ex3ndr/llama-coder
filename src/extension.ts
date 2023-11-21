@@ -5,8 +5,8 @@ import { info, registerLogger } from './modules/log';
 export function activate(context: vscode.ExtensionContext) {
 
 	// Create logger
-	registerLogger(vscode.window.createOutputChannel('Ollama Coder', { log: true }));
-	info('Ollama Coder is activated.');
+	registerLogger(vscode.window.createOutputChannel('Llama Coder', { log: true }));
+	info('Llama Coder is activated.');
 
 	// Create provider
 	const provider = new PromptProvider();

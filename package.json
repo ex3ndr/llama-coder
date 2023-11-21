@@ -1,7 +1,7 @@
 {
-  "name": "ollama-coder",
-  "displayName": "ollama-coder",
-  "description": "Using Ollama as your coding assistant",
+  "name": "llama-coder",
+  "displayName": "llama-coder",
+  "description": "Local AI coding assistant",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.84.0"
