@@ -1,6 +1,6 @@
 # Llama Coder
 
-Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio Code. Llama Coder uses [Ollama](ollama.ai) and codellama to provide autocomplete that runs on your hardware. Works best with Mac M1/M2/M3 or with RTX 4090.
+Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio Code. Llama Coder uses [Ollama](https://ollama.ai) and codellama to provide autocomplete that runs on your hardware. Works best with Mac M1/M2/M3 or with RTX 4090.
 
 ## Features
 * 🚀 As good as Copilot
@@ -10,17 +10,18 @@ Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio
 
 ## Recommended hardware
 
-The best way: dedicated machine with RTX 4090. Install [Ollama](ollama.ai) on this machine and configure endpoint in extension settings to offload to this machine.
+Minimum required RAM: 16GB is a minimum, more is better since even smallest model takes 5GB of RAM.
+The best way: dedicated machine with RTX 4090. Install [Ollama](https://ollama.ai) on this machine and configure endpoint in extension settings to offload to this machine.
 Second best way: run on MacBooc M1/M2/M3 with enougth RAM (more == better, but 10gb extra would be enougth).
 For windows notebooks: it runs good with decent GPU, but dedicated machine with a good GPU is recommended. Perfect if you have a dedicated gaming PC.
 
 ## Local Installation
 
-Install [Ollama](ollama.ai) on local machine and then launch the extension in VSCode, everything should work as it is.
+Install [Ollama](https://ollama.ai) on local machine and then launch the extension in VSCode, everything should work as it is.
 
 ## Remote Installation
 
-Install [Ollama](ollama.ai) on dedicated machine and configure endpoint to it in extension settings. Ollama usually uses port 11434 and binds to `127.0.0.1`, to change it you should set `OLLAMA_HOST` to `0.0.0.0`.
+Install [Ollama](https://ollama.ai) on dedicated machine and configure endpoint to it in extension settings. Ollama usually uses port 11434 and binds to `127.0.0.1`, to change it you should set `OLLAMA_HOST` to `0.0.0.0`.
 
 ## Models
 
