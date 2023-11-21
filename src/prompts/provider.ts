@@ -31,13 +31,19 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                 return;
             }
 
+            // Config
+            let config = vscode.workspace.getConfiguration('inference');
+            info(`Config: ${JSON.stringify(config)}`);
+            let endpoint = config.get('endpoint') as string;
+            let model = config.get('model') as string;
+
             // Run AI completion
             info(`Running AI completion...`);
             let res = await autocomplete({
                 prefix: prepared.prefix,
                 suffix: prepared.suffix,
-                endpoint: 'http://127.0.0.1:11434/',
-                model: 'codellama:13b-code-q6_K',
+                endpoint: endpoint,
+                model: model,
                 canceled: () => token.isCancellationRequested,
             });
             if (token.isCancellationRequested) {

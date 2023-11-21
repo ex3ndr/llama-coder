@@ -98,5 +98,8 @@ export async function autocomplete(args: {
         res = res.slice(0, res.length - 5);
     }
 
+    // Trim ends of all lines since sometimes the AI completion will add extra spaces
+    res = res.split('\n').map((v) => v.trimEnd()).join('\n');
+
     return res;
 }

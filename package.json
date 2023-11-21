@@ -9,9 +9,32 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": ["*"],
+  "activationEvents": [
+    "*"
+  ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": [
+      {
+        "title": "Inference Settings",
+        "properties": {
+          "inference.endpoint": {
+            "type": "string",
+            "default": "http://127.0.0.1:11434/",
+            "description": "Ollama Server Endpoint"
+          },
+          "inference.model": {
+            "type": "string",
+            "enum": [
+              "codellama:7b-code-q4_K_S",
+              "codellama:13b-code-q6_K"
+            ],
+            "default": "codellama:7b-code-q4_K_S",
+            "description": "Inference model to use"
+          }
+        }
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
