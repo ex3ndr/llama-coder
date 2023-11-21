@@ -1,6 +1,6 @@
 # Llama Coder
 
-Llama Coder is a VS Studio Code extension that uses [Ollama](ollama.ai) and codellama to provide autocomplete that runs on your hardware. Works best with Mac M1/M2/M3 or with RTX 4090.
+Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio Code. Llama Coder uses [Ollama](ollama.ai) and codellama to provide autocomplete that runs on your hardware. Works best with Mac M1/M2/M3 or with RTX 4090.
 
 ## Features
 * 🚀 As good as Copilot

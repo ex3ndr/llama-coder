@@ -1,8 +1,8 @@
 {
   "name": "llama-coder",
   "displayName": "Llama Coder",
-  "description": "Local AI coding assistant",
-  "version": "0.0.3",
+  "description": "Better and self-hosted Github Copilot replacement",
+  "version": "0.0.4",
   "icon": "icon.png",
   "publisher": "ex3ndr",
   "repository": {
