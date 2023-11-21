@@ -3,12 +3,29 @@
   "displayName": "llama-coder",
   "description": "Local AI coding assistant",
   "version": "0.0.1",
+  "icon": "logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ex3ndr/llama-coder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ex3ndr/llama-coder/issues"
+  },
+  "license": "MIT",
+  "categories": [
+    "Machine Learning",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "code",
+    "assistant",
+    "ai",
+    "llm",
+    "development"
+  ],
   "engines": {
     "vscode": "^1.84.0"
   },
-  "categories": [
-    "Other"
-  ],
   "activationEvents": [
     "*"
   ],
