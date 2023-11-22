@@ -54,7 +54,15 @@
               "codellama:13b-code-fp16",
               "codellama:34b-code-q4_K_S",
               "codellama:34b-code-q4_K_M",
-              "codellama:34b-code-q6_K"
+              "codellama:34b-code-q6_K",
+              "deepseek-coder:6.7b-instruct-q4_K_S",
+              "deepseek-coder:6.7b-instruct-q4_K_M",
+              "deepseek-coder:6.7b-instruct-q8_0",
+              "deepseek-coder:6.7b-instruct-fp16",
+              "deepseek-coder:33b-instruct-q4_K_S",
+              "deepseek-coder:33b-instruct-q4_K_M",
+              "deepseek-coder:33b-instruct-q8_0",
+              "deepseek-coder:33b-instruct-fp16"
             ],
             "default": "codellama:7b-code-q4_K_M",
             "description": "Inference model to use"

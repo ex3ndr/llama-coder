@@ -1,21 +1,24 @@
 import type vscode from 'vscode';
 
 type Logger = {
-    info(msg: string): void;
+    info(message: string, ...args: any[]): void;
+    warn(message: string, ...args: any[]): void;
 };
 
 let logger: Logger | null = null;
 
 export function registerLogger(channel: vscode.LogOutputChannel) {
-    logger = {
-        info(msg: string) {
-            channel.appendLine(msg);
-        }
-    };
+    logger = channel;
 }
 
-export function info(src: string) {
+export function info(message: string, ...args: any[]) {
     if (logger) {
-        logger.info(src);
+        logger.info(message, ...args);
+    }
+}
+
+export function warn(message: string, ...args: any[]) {
+    if (logger) {
+        logger.warn(message, ...args);
     }
 }

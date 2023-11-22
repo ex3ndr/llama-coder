@@ -1,6 +1,7 @@
 import { ollamaTokenGenerator } from '../modules/ollamaTokenGenerator';
 import { countSymbol } from '../modules/text';
 import { info } from '../modules/log';
+import { adaptPrompt } from './adaptors/adaptPrompt';
 
 export async function autocomplete(args: {
     endpoint: string,
@@ -13,7 +14,7 @@ export async function autocomplete(args: {
     // Calculate arguments
     let data = {
         model: args.model,
-        prompt: `<PRE> ${args.prefix} <SUF>${args.suffix} <MID>`, // Codellama format
+        prompt: adaptPrompt({ prefix: args.prefix, suffix: args.suffix, model: args.model }),
         raw: true,
         options: {
             num_predict: 256
