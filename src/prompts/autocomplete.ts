@@ -8,6 +8,8 @@ export async function autocomplete(args: {
     model: string,
     prefix: string,
     suffix: string,
+    maxLines: number,
+    maxTokens: number,
     canceled?: () => boolean,
 }): Promise<string> {
 
@@ -17,7 +19,7 @@ export async function autocomplete(args: {
         prompt: adaptPrompt({ prefix: args.prefix, suffix: args.suffix, model: args.model }),
         raw: true,
         options: {
-            num_predict: 256
+            num_predict: args.maxTokens
         }
     };
 
@@ -75,9 +77,8 @@ export async function autocomplete(args: {
 
         // Update total lines
         totalLines += countSymbol(tokens.response, '\n');
-
         // Break if too many lines and on top level
-        if (totalLines > 16 && blockStack.length === 0) {
+        if (totalLines > args.maxLines && blockStack.length === 0) {
             info('Too many lines, breaking.');
             break;
         }

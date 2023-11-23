@@ -41,6 +41,14 @@
             "default": "http://127.0.0.1:11434/",
             "description": "Ollama Server Endpoint"
           },
+          "inference.maxLines": {
+            "type": "number",
+            "default": 16
+          },
+          "inference.maxTokens": {
+            "type": "number",
+            "default": 256
+          },
           "inference.model": {
             "type": "string",
             "enum": [
