@@ -43,11 +43,13 @@
           },
           "inference.maxLines": {
             "type": "number",
-            "default": 16
+            "default": 16,
+            "description": "Max number of lines to be keep."
           },
           "inference.maxTokens": {
             "type": "number",
-            "default": 256
+            "default": 256,
+            "description": "Max number of new tokens to be generated."
           },
           "inference.model": {
             "type": "string",
