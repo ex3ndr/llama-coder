@@ -51,6 +51,11 @@
             "default": 256,
             "description": "Max number of new tokens to be generated."
           },
+          "inference.temperature": {
+            "type": "number",
+            "default": 0.2,
+            "description": "Temperature of the model. Increasing the temperature will make the model answer more creatively."
+          },
           "inference.model": {
             "type": "string",
             "enum": [

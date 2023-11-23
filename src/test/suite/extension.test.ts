@@ -19,6 +19,7 @@ suite('Extension Test Suite', () => {
 		let model = 'codellama:7b-code-q4_K_S'; // Lightweight llm for tests
 		let maxLines = 16;
 		let maxTokens = 256;
+		let temperature = 0.2;
 		let prompt = 'fun main(): ';
 		let result = await autocomplete({
 			endpoint,
@@ -26,7 +27,8 @@ suite('Extension Test Suite', () => {
 			prefix: prompt,
 			suffix: '',
 			maxLines,
-			maxTokens
+			maxTokens,
+			temperature
 		});
 		console.warn(result);
 	});

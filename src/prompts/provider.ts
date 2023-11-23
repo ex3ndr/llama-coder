@@ -67,6 +67,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                     let model = config.get('model') as string;
                     let maxLines = config.get('maxLines') as number;
                     let maxTokens = config.get('maxTokens') as number;
+                    let temperature = config.get('temperature') as number;
                     if (endpoint.endsWith('/')) {
                         endpoint = endpoint.slice(0, endpoint.length - 1);
                     }
@@ -102,6 +103,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                             model: model,
                             maxLines: maxLines,
                             maxTokens: maxTokens,
+                            temperature,
                             canceled: () => token.isCancellationRequested,
                         });
                         info(`AI completion completed: ${res}`);

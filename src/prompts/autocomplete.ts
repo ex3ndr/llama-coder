@@ -10,6 +10,7 @@ export async function autocomplete(args: {
     suffix: string,
     maxLines: number,
     maxTokens: number,
+    temperature: number,
     canceled?: () => boolean,
 }): Promise<string> {
 
@@ -19,7 +20,8 @@ export async function autocomplete(args: {
         prompt: adaptPrompt({ prefix: args.prefix, suffix: args.suffix, model: args.model }),
         raw: true,
         options: {
-            num_predict: args.maxTokens
+            num_predict: args.maxTokens,
+            temperature: args.temperature
         }
     };
 
