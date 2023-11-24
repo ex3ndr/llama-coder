@@ -17,12 +17,18 @@ suite('Extension Test Suite', () => {
 	test('should perform autocomplete', async () => {
 		let endpoint = 'http://127.0.0.1:11434';
 		let model = 'codellama:7b-code-q4_K_S'; // Lightweight llm for tests
+		let maxLines = 16;
+		let maxTokens = 256;
+		let temperature = 0.2;
 		let prompt = 'fun main(): ';
 		let result = await autocomplete({
 			endpoint,
 			model,
 			prefix: prompt,
-			suffix: ''
+			suffix: '',
+			maxLines,
+			maxTokens,
+			temperature
 		});
 		console.warn(result);
 	});
