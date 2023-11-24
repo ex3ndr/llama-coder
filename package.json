@@ -34,7 +34,7 @@
   "contributes": {
     "configuration": [
       {
-        "title": "Inference Settings",
+        "title": "Llama coder",
         "properties": {
           "inference.endpoint": {
             "type": "string",
