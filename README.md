@@ -2,6 +2,8 @@
 
 Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio Code. Llama Coder uses [Ollama](https://ollama.ai) and codellama to provide autocomplete that runs on your hardware. Works best with Mac M1/M2/M3 or with RTX 4090.
 
+[VS Code Plugin](https://marketplace.visualstudio.com/items?itemName=ex3ndr.llama-coder)
+
 ## Features
 * 🚀 As good as Copilot
 * ⚡️ Fast. Works well on consumer GPUs. RTX 4090 is recommended for best performance.
