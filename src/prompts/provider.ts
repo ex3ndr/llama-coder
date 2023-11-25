@@ -28,7 +28,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
             }
 
             // Ignore if not needed
-            if (isNotNeeded(document, position)) {
+            if (isNotNeeded(document, position, context)) {
                 info('No inline completion required');
                 return;
             }
