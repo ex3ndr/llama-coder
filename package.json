@@ -2,7 +2,7 @@
   "name": "llama-coder",
   "displayName": "Llama Coder",
   "description": "Better and self-hosted Github Copilot replacement",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "icon": "icon.png",
   "publisher": "ex3ndr",
   "repository": {
@@ -70,14 +70,15 @@
               "codellama:34b-code-q4_K_S",
               "codellama:34b-code-q4_K_M",
               "codellama:34b-code-q6_K",
-              "deepseek-coder:6.7b-instruct-q4_K_S",
-              "deepseek-coder:6.7b-instruct-q4_K_M",
-              "deepseek-coder:6.7b-instruct-q8_0",
-              "deepseek-coder:6.7b-instruct-fp16",
-              "deepseek-coder:33b-instruct-q4_K_S",
-              "deepseek-coder:33b-instruct-q4_K_M",
-              "deepseek-coder:33b-instruct-q8_0",
-              "deepseek-coder:33b-instruct-fp16"
+              "deepseek-coder:1.3b-base-q4_0",
+              "deepseek-coder:1.3b-base-q4_1",
+              "deepseek-coder:1.3b-base-q8_0",
+              "deepseek-coder:6.7b-base-q4_K_S",
+              "deepseek-coder:6.7b-base-q8_0",
+              "deepseek-coder:6.7b-base-fp16",
+              "deepseek-coder:33b-base-q4_K_S",
+              "deepseek-coder:33b-base-q4_K_M",
+              "deepseek-coder:33b-base-fp16"
             ],
             "default": "codellama:7b-code-q4_K_M",
             "description": "Inference model to use"

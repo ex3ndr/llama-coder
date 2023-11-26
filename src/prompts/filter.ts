@@ -13,9 +13,9 @@ export function isNotNeeded(doc: vscode.TextDocument, position: vscode.Position,
     // }
 
     // Avoid autocomplete when system menu is shown (ghost text is hidden anyway)
-    if (context.selectedCompletionInfo) {
-        return true;
-    }
+    // if (context.selectedCompletionInfo) {
+    //     return true;
+    // }
 
     return false;
 }

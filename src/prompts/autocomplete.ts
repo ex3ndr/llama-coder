@@ -14,12 +14,15 @@ export async function autocomplete(args: {
     canceled?: () => boolean,
 }): Promise<string> {
 
+    let prompt = adaptPrompt({ prefix: args.prefix, suffix: args.suffix, model: args.model });
+
     // Calculate arguments
     let data = {
         model: args.model,
-        prompt: adaptPrompt({ prefix: args.prefix, suffix: args.suffix, model: args.model }),
+        prompt: prompt.prompt,
         raw: true,
         options: {
+            stop: prompt.stop,
             num_predict: args.maxTokens,
             temperature: args.temperature
         }
