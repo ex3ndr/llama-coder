@@ -7,7 +7,7 @@ export async function autocomplete(args: {
     endpoint: string,
     model: string,
     prefix: string,
-    suffix: string,
+    suffix: string | null,
     maxLines: number,
     maxTokens: number,
     temperature: number,

@@ -42,6 +42,20 @@ Currently Llama Coder supports only Codellama. Model is quantized in different w
 * m - slow on MacOS
 * g - slow on older NVidia cards (pre 30xx)
 
-## License
+## Changelog
 
-MIT
+## [0.0.8]
+- Improved DeepSeek support and language detection
+
+## [0.0.7]
+- Added DeepSeek support
+- Ability to change temperature and top p
+- Fixed some bugs
+
+## [0.0.6]
+- Fix ollama links
+- Added more models
+
+## [0.0.4]
+
+- Initial release of Llama Coder

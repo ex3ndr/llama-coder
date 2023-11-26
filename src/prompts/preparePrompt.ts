@@ -1,5 +1,7 @@
 import vscode from 'vscode';
-import path from 'path';
+import { detectLanguage } from './processors/detectLanguage';
+import { fileHeaders } from './processors/fileHeaders';
+import { languages } from './processors/languages';
 
 export async function preparePrompt(document: vscode.TextDocument, position: vscode.Position, context: vscode.InlineCompletionContext) {
 
@@ -7,24 +9,23 @@ export async function preparePrompt(document: vscode.TextDocument, position: vsc
     let text = document.getText();
     let offset = document.offsetAt(position);
     let prefix = text.slice(0, offset);
-    let suffix = text.slice(offset);
+    let suffix: string | null = text.slice(offset);
 
     // Trim suffix
-    // NOTE: It seems that most neural networks are built have a focus on last characters and we therefore need to trim them to not get weird results.
-    // TODO: Better solution?
-    // TODO: Am i right here? What if we would want to generate something that uses something in the end of the file?
-    if (suffix.length > 256) {
-        suffix = suffix.slice(0, 256);
+    // If suffix is too small it is safe to assume that it could be ignored which would allow us to use
+    // more powerful completition instead of in middle one
+    if (suffix.length < 256) {
+        suffix = null;
     }
 
     // Add filename and language to prefix
     // NOTE: Most networks don't have a concept of filenames and expected language, but we expect that some files in training set has something in title that 
     //       would indicate filename and language
-    // NOTE: We are building for typescript for now so we can use C-style comments to indicate filename
-    let filename = path.basename(document.fileName);
-    let language = document.languageId;
-    let filenamePrefix = `/* ${language}, filename: ${filename} */`;
-    prefix = filenamePrefix + '\n' + prefix;
+    // NOTE: If we can't detect language, we could ignore this since the number of languages that need detection is limited
+    let language = detectLanguage(document.uri.fsPath, document.languageId);
+    if (language) {
+        prefix = fileHeaders(prefix, document.uri.fsPath, languages[language]);
+    }
 
     return {
         prefix,

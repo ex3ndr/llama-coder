@@ -6,21 +6,23 @@ function normalizeText(src: string) {
     return src;
 }
 
-function extractPromptCacheKey(args: { prefix: string, suffix: string }) {
-    let key = normalizeText(args.prefix + ' ##CURSOR## ' + args.suffix);
-
-    return key;
+function extractPromptCacheKey(args: { prefix: string, suffix: string | null }) {
+    if (args.suffix) {
+        return normalizeText(args.prefix + ' ##CURSOR## ' + args.suffix);
+    } else {
+        return normalizeText(args.prefix);
+    }
 }
 
 // TODO: make it LRU
 let cache: { [key: string]: string | null } = {};
 
-export function getFromPromptCache(args: { prefix: string, suffix: string }): string | undefined | null {
+export function getFromPromptCache(args: { prefix: string, suffix: string | null }): string | undefined | null {
     const key = extractPromptCacheKey(args);
     return cache[key];
 }
 
-export function setPromptToCache(args: { prefix: string, suffix: string, value: string | null }) {
+export function setPromptToCache(args: { prefix: string, suffix: string | null, value: string | null }) {
     const key = extractPromptCacheKey(args);
     cache[key] = args.value;
 }
