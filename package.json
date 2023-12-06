@@ -2,7 +2,7 @@
   "name": "llama-coder",
   "displayName": "Llama Coder",
   "description": "Better and self-hosted Github Copilot replacement",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "icon": "icon.png",
   "publisher": "ex3ndr",
   "repository": {
@@ -83,7 +83,7 @@
               "deepseek-coder:33b-base-q4_K_M",
               "deepseek-coder:33b-base-fp16"
             ],
-            "default": "codellama:7b-code-q4_K_M",
+            "default": "deepseek-coder:1.3b-base-q4_1",
             "description": "Inference model to use"
           }
         }
