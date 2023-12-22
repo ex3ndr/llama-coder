@@ -1,20 +1,21 @@
 import { ollamaTokenGenerator } from '../modules/ollamaTokenGenerator';
 import { countSymbol } from '../modules/text';
 import { info } from '../modules/log';
-import { adaptPrompt } from './adaptors/adaptPrompt';
+import { ModelFormat, adaptPrompt } from './processors/models';
 
 export async function autocomplete(args: {
     endpoint: string,
     model: string,
+    format: ModelFormat,
     prefix: string,
-    suffix: string | null,
+    suffix: string,
     maxLines: number,
     maxTokens: number,
     temperature: number,
     canceled?: () => boolean,
 }): Promise<string> {
 
-    let prompt = adaptPrompt({ prefix: args.prefix, suffix: args.suffix, model: args.model });
+    let prompt = adaptPrompt({ prefix: args.prefix, suffix: args.suffix, format: args.format });
 
     // Calculate arguments
     let data = {

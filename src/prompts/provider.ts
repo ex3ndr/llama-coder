@@ -7,6 +7,7 @@ import { getFromPromptCache, setPromptToCache } from './promptCache';
 import { isNotNeeded, isSupported } from './filter';
 import { ollamaCheckModel } from '../modules/ollamaCheckModel';
 import { ollamaDownloadModel } from '../modules/ollamaDownloadModel';
+import { config } from '../config';
 
 export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
@@ -62,22 +63,23 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                 if (cached === undefined) {
 
                     // Config
-                    let config = vscode.workspace.getConfiguration('inference');
-                    let endpoint = config.get('endpoint') as string;
-                    let model = config.get('model') as string;
-                    let maxLines = config.get('maxLines') as number;
-                    let maxTokens = config.get('maxTokens') as number;
-                    let temperature = config.get('temperature') as number;
-                    if (endpoint.endsWith('/')) {
-                        endpoint = endpoint.slice(0, endpoint.length - 1);
-                    }
+                    let inferenceConfig = config.inference;
+                    // let config = vscode.workspace.getConfiguration('inference');
+                    // let endpoint = config.get('endpoint') as string;
+                    // let model = config.get('model') as string;
+                    // let maxLines = config.get('maxLines') as number;
+                    // let maxTokens = config.get('maxTokens') as number;
+                    // let temperature = config.get('temperature') as number;
+                    // if (endpoint.endsWith('/')) {
+                    //     endpoint = endpoint.slice(0, endpoint.length - 1);
+                    // }
 
                     // Update status
                     this.statusbar.text = `$(sync~spin) Llama Coder`;
                     try {
 
                         // Check model exists
-                        let modelExists = await ollamaCheckModel(endpoint, model);
+                        let modelExists = await ollamaCheckModel(inferenceConfig.endpoint, inferenceConfig.modelName);
                         if (token.isCancellationRequested) {
                             info(`Canceled after AI completion.`);
                             return;
@@ -86,7 +88,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                         // Download model if not exists
                         if (!modelExists) {
                             this.statusbar.text = `$(sync~spin) Downloading`;
-                            await ollamaDownloadModel(endpoint, model);
+                            await ollamaDownloadModel(inferenceConfig.endpoint, inferenceConfig.modelName);
                             this.statusbar.text = `$(sync~spin) Llama Coder`;
                         }
                         if (token.isCancellationRequested) {
@@ -99,11 +101,12 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                         res = await autocomplete({
                             prefix: prepared.prefix,
                             suffix: prepared.suffix,
-                            endpoint: endpoint,
-                            model: model,
-                            maxLines: maxLines,
-                            maxTokens: maxTokens,
-                            temperature,
+                            endpoint: inferenceConfig.endpoint,
+                            model: inferenceConfig.modelName,
+                            format: inferenceConfig.modelFormat,
+                            maxLines: inferenceConfig.maxLines,
+                            maxTokens: inferenceConfig.maxTokens,
+                            temperature: inferenceConfig.temperature,
                             canceled: () => token.isCancellationRequested,
                         });
                         info(`AI completion completed: ${res}`);

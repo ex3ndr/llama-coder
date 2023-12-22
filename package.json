@@ -38,23 +38,9 @@
         "properties": {
           "inference.endpoint": {
             "type": "string",
-            "default": "http://127.0.0.1:11434/",
-            "description": "Ollama Server Endpoint"
-          },
-          "inference.maxLines": {
-            "type": "number",
-            "default": 16,
-            "description": "Max number of lines to be keep."
-          },
-          "inference.maxTokens": {
-            "type": "number",
-            "default": 256,
-            "description": "Max number of new tokens to be generated."
-          },
-          "inference.temperature": {
-            "type": "number",
-            "default": 0.2,
-            "description": "Temperature of the model. Increasing the temperature will make the model answer more creatively."
+            "default": "",
+            "description": "Ollama Server Endpoint. Empty for local instance.",
+            "order": 1
           },
           "inference.model": {
             "type": "string",
@@ -81,10 +67,46 @@
               "deepseek-coder:6.7b-base-fp16",
               "deepseek-coder:33b-base-q4_K_S",
               "deepseek-coder:33b-base-q4_K_M",
-              "deepseek-coder:33b-base-fp16"
+              "deepseek-coder:33b-base-fp16",
+              "custom"
             ],
             "default": "deepseek-coder:1.3b-base-q4_1",
-            "description": "Inference model to use"
+            "description": "Inference model to use",
+            "order": 2
+          },
+          "inference.temperature": {
+            "type": "number",
+            "default": 0.2,
+            "description": "Temperature of the model. Increasing the temperature will make the model answer more creatively.",
+            "order": 3
+          },          
+          "inference.custom.model": {
+            "type": "string",
+            "default": "",
+            "description": "Custom model name",
+            "order": 4
+          },
+          "inference.custom.format": {
+            "type": "string",
+            "enum": [
+              "codellama",
+              "deepseek"
+            ],
+            "default": "codellama",
+            "description": "Custom model prompt format",
+            "order": 5
+          },
+          "inference.maxLines": {
+            "type": "number",
+            "default": 16,
+            "description": "Max number of lines to be keep.",
+            "order": 6
+          },
+          "inference.maxTokens": {
+            "type": "number",
+            "default": 256,
+            "description": "Max number of new tokens to be generated.",
+            "order": 7
           }
         }
       }
