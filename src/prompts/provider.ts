@@ -13,9 +13,11 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
     lock = new AsyncLock();
     statusbar: vscode.StatusBarItem;
+    context: vscode.ExtensionContext;
 
-    constructor(statusbar: vscode.StatusBarItem) {
+    constructor(statusbar: vscode.StatusBarItem, context: vscode.ExtensionContext) {
         this.statusbar = statusbar;
+        this.context = context;
     }
 
     async provideInlineCompletionItems(document: vscode.TextDocument, position: vscode.Position, context: vscode.InlineCompletionContext, token: vscode.CancellationToken): Promise<vscode.InlineCompletionItem[] | vscode.InlineCompletionList | undefined | null> {
@@ -87,6 +89,22 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
                         // Download model if not exists
                         if (!modelExists) {
+
+                            // Check if user asked to ignore download
+                            if (this.context.globalState.get('llama-coder-download-ignored')) {
+                                info(`Ingoring since user asked to ignore download.`);
+                                return;
+                            }
+
+                            // Ask for download
+                            let download = await vscode.window.showInformationMessage(`Model ${inferenceConfig.modelName} is not downloaded. Do you want to download it? Answering "No" would require you to manually download model.`, 'Yes', 'No');
+                            if (download === 'No') {
+                                info(`Ingoring since user asked to ignore download.`);
+                                this.context.globalState.update('llama-coder-download-ignored', true);
+                                return;
+                            }
+
+                            // Perform download
                             this.statusbar.text = `$(sync~spin) Downloading`;
                             await ollamaDownloadModel(inferenceConfig.endpoint, inferenceConfig.modelName);
                             this.statusbar.text = `$(sync~spin) Llama Coder`;

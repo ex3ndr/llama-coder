@@ -42,10 +42,15 @@ Currently Llama Coder supports only Codellama. Model is quantized in different w
 * m - slow on MacOS
 * g - slow on older NVidia cards (pre 30xx)
 
+## Troubleshooting
+
+Most of the problems could be seen in output of a plugin in VS Code extension output.
+
 ## Changelog
 
 ## [0.0.10]
 - Adding ability to pick a custom model
+- Asking user if he wants to download model if it is not available
 
 ## [0.0.9]
 - Adding deepseek 1b model and making it default

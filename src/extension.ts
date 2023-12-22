@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(statusBarItem);
 
 	// Create provider
-	const provider = new PromptProvider(statusBarItem);
+	const provider = new PromptProvider(statusBarItem, context);
 	let disposable = vscode.languages.registerInlineCompletionItemProvider({ pattern: '**', }, provider);
 	context.subscriptions.push(disposable);
 }
