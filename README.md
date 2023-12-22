@@ -44,6 +44,12 @@ Currently Llama Coder supports only Codellama. Model is quantized in different w
 
 ## Changelog
 
+## [0.0.10]
+- Adding ability to pick a custom model
+
+## [0.0.9]
+- Adding deepseek 1b model and making it default
+
 ## [0.0.8]
 - Improved DeepSeek support and language detection
 
