@@ -11,8 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Create status bar
 	const openSettings = 'llama.openSettings';
 	context.subscriptions.push(vscode.commands.registerCommand(openSettings, () => {
-		// const n = getNumberOfSelectedLines(vscode.window.activeTextEditor);
-		// vscode.window.showInformationMessage(`Yeah, ${n} line(s) selected... Keep going!`);
+		vscode.commands.executeCommand('workbench.action.openSettings', '@ext:ex3ndr.llama-coder');
 	}));
 	let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
 	statusBarItem.command = openSettings;
