@@ -14,7 +14,7 @@ Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio
 
 Minimum required RAM: 16GB is a minimum, more is better since even smallest model takes 5GB of RAM.
 The best way: dedicated machine with RTX 4090. Install [Ollama](https://ollama.ai) on this machine and configure endpoint in extension settings to offload to this machine.
-Second best way: run on MacBooc M1/M2/M3 with enougth RAM (more == better, but 10gb extra would be enougth).
+Second best way: run on MacBook M1/M2/M3 with enougth RAM (more == better, but 10gb extra would be enougth).
 For windows notebooks: it runs good with decent GPU, but dedicated machine with a good GPU is recommended. Perfect if you have a dedicated gaming PC.
 
 ## Local Installation
@@ -50,7 +50,7 @@ Most of the problems could be seen in output of a plugin in VS Code extension ou
 
 ## [0.0.10]
 - Adding ability to pick a custom model
-- Asking user if he wants to download model if it is not available
+- Asking user if they want to download model if it is not available
 
 ## [0.0.9]
 - Adding deepseek 1b model and making it default
