@@ -45,6 +45,7 @@
           "inference.model": {
             "type": "string",
             "enum": [
+              "stable-code:3b-code-q4_0",
               "codellama:7b-code-q4_K_S",
               "codellama:7b-code-q4_K_M",
               "codellama:7b-code-q6_K",
@@ -70,7 +71,7 @@
               "deepseek-coder:33b-base-fp16",
               "custom"
             ],
-            "default": "deepseek-coder:1.3b-base-q4_1",
+            "default": "stable-code:3b-code-q4_0",
             "description": "Inference model to use",
             "order": 2
           },
@@ -89,6 +90,7 @@
           "inference.custom.format": {
             "type": "string",
             "enum": [
+              "stable-code",
               "codellama",
               "deepseek"
             ],

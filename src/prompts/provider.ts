@@ -91,7 +91,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                         if (!modelExists) {
 
                             // Check if user asked to ignore download
-                            if (this.context.globalState.get('llama-coder-download-ignored')) {
+                            if (this.context.globalState.get('llama-coder-download-ignored') === inferenceConfig.modelName) {
                                 info(`Ingoring since user asked to ignore download.`);
                                 return;
                             }
@@ -100,7 +100,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                             let download = await vscode.window.showInformationMessage(`Model ${inferenceConfig.modelName} is not downloaded. Do you want to download it? Answering "No" would require you to manually download model.`, 'Yes', 'No');
                             if (download === 'No') {
                                 info(`Ingoring since user asked to ignore download.`);
-                                this.context.globalState.update('llama-coder-download-ignored', true);
+                                this.context.globalState.update('llama-coder-download-ignored', inferenceConfig.modelName);
                                 return;
                             }
 

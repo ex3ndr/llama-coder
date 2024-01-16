@@ -1,4 +1,5 @@
 import vscode from 'vscode';
+import { ModelFormat } from './prompts/processors/models';
 
 class Config {
 
@@ -22,13 +23,15 @@ class Config {
 
         // Load model
         let modelName = config.get('model') as string;
-        let modelFormat: 'codellama' | 'deepseek' = 'codellama';
+        let modelFormat: ModelFormat = 'codellama';
         if (modelName === 'custom') {
             modelName = config.get('custom.model') as string;
-            modelFormat = config.get('cutom.format') as 'codellama' | 'deepseek';
+            modelFormat = config.get('cutom.format') as ModelFormat;
         } else {
             if (modelName.startsWith('deepseek-coder')) {
                 modelFormat = 'deepseek';
+            } else if (modelName.startsWith('stable-code')) {
+                modelFormat = 'stable-code';
             }
         }
 
