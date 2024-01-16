@@ -50,7 +50,7 @@ Most of the problems could be seen in output of a plugin in VS Code extension ou
 
 ## [0.0.10]
 - Adding ability to pick a custom model
-- Asking user if he wants to download model if it is not available
+- Asking user if they want to download model if it is not available
 
 ## [0.0.9]
 - Adding deepseek 1b model and making it default
