@@ -6,7 +6,7 @@ Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio
 
 ## Features
 * 🚀 As good as Copilot
-* ⚡️ Fast. Works well on consumer GPUs. RTX 4090 is recommended for best performance.
+* ⚡️ Fast. Works well on consumer GPUs. Apple Silicon or RTX 4090 is recommended for best performance.
 * 🔐 No telemetry or tracking
 * 🔬 Works with any language coding or human one.
 
@@ -27,10 +27,11 @@ Install [Ollama](https://ollama.ai) on dedicated machine and configure endpoint 
 
 ## Models
 
-Currently Llama Coder supports only Codellama. Model is quantized in different ways, but our tests shows that `q4` is an optimal way to run network. When selecting model the bigger the model is, it performs better. Always pick the model with the biggest size and the biggest possible quantization for your machine. Default one is `codellama:7b-code-q4_K_M` and should work everywhere, `codellama:34b-code-q4_K_M` is the best possible one.
+Currently Llama Coder supports only Codellama. Model is quantized in different ways, but our tests shows that `q4` is an optimal way to run network. When selecting model the bigger the model is, it performs better. Always pick the model with the biggest size and the biggest possible quantization for your machine. Default one is `stable-code:3b-code-q4_0` and should work everywhere and outperforms most other models.
 
 | Name                      | RAM/VRAM | Notes |
 |---------------------------|----------|-------|
+| stable-code:3b-code-q4_0  | 3GB      |       |
 | codellama:7b-code-q4_K_M  | 5GB      |       |
 | codellama:7b-code-q6_K    | 6GB      | m     |
 | codellama:7b-code-fp16    | 14GB     | g     |
@@ -47,6 +48,10 @@ Currently Llama Coder supports only Codellama. Model is quantized in different w
 Most of the problems could be seen in output of a plugin in VS Code extension output.
 
 ## Changelog
+
+## [0.0.11]
+- Added Stable Code model
+- Pause download only for specific model instead of all models
 
 ## [0.0.10]
 - Adding ability to pick a custom model
