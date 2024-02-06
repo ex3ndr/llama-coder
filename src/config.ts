@@ -35,13 +35,16 @@ class Config {
             }
         }
 
+        let delay = config.get('delay') as number;
+
         return {
             endpoint,
             maxLines,
             maxTokens,
             temperature,
             modelName,
-            modelFormat
+            modelFormat,
+            delay
         };
     }
 
