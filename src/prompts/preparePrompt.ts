@@ -2,6 +2,7 @@ import vscode from 'vscode';
 import { detectLanguage } from './processors/detectLanguage';
 import { fileHeaders } from './processors/fileHeaders';
 import { languages } from './processors/languages';
+import { config } from '../config';
 
 var decoder = new TextDecoder("utf8");
 
@@ -13,11 +14,12 @@ function getNotebookDocument(document: vscode.TextDocument): vscode.NotebookDocu
 export async function preparePrompt(document: vscode.TextDocument, position: vscode.Position, context: vscode.InlineCompletionContext) {
 
     // Load document text
-    console.log(document);
     let text = document.getText();
     let offset = document.offsetAt(position);
     let prefix = text.slice(0, offset);
     let suffix: string = text.slice(offset);
+
+    let notebookConfig = config.notebook;
 
     // If this is a notebook, add the surrounding cells to the prefix and suffix
     let notebookDocument = getNotebookDocument(document);
@@ -43,21 +45,26 @@ export async function preparePrompt(document: vscode.TextDocument, position: vsc
             
             // add the markdown cell output to the prompt as a comment
             if (cell.kind === vscode.NotebookCellKind.Markup && commentStart) {
-                for (const line of cell.document.getText().split('\n')) {
-                    out += `\n${commentStart}${line}`;
+                if (notebookConfig.includeMarkup) {
+                    for (const line of cell.document.getText().split('\n')) {
+                        out += `\n${commentStart}${line}`;
+                    }
                 }
             } else {
                 out += cell.document.getText();
             }
 
             // if there is any outputs add them to the prompt as a comment
-            if (cell.kind === vscode.NotebookCellKind.Code && commentStart) {
-                console.log(cell.outputs);
+            const addCellOutputs = notebookConfig.includeCellOutputs
+                                    && beforeCurrentCell
+                                    && cell.kind === vscode.NotebookCellKind.Code
+                                    && commentStart;
+            if (addCellOutputs) {
                 let cellOutputs = cell.outputs
                     .map(x => x.items
                                 .filter(x => x.mime === 'text/plain')
                                 .map(x => decoder.decode(x.data))
-                                .map(x => x.slice(0, 256).split('\n'))) // limit to 256 characters
+                                .map(x => x.slice(0, notebookConfig.cellOutputLimit).split('\n')))
                     .flat(3);
                 
                 if (cellOutputs.length > 0) {

@@ -45,6 +45,20 @@ class Config {
         };
     }
 
+    // Notebook
+    get notebook() {
+        let config = vscode.workspace.getConfiguration('notebook');
+
+        let includeMarkup = config.get('includeMarkup') as boolean;
+        let includeCellOutputs = config.get('includeCellOutputs') as boolean;
+        let cellOutputLimit = config.get('cellOutputLimit') as number;
+        return {
+            includeMarkup,
+            includeCellOutputs,
+            cellOutputLimit,
+        };
+    }
+
     get #config() {
         return vscode.workspace.getConfiguration('inference');
     };
