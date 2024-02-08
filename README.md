@@ -49,6 +49,12 @@ Most of the problems could be seen in output of a plugin in VS Code extension ou
 
 ## Changelog
 
+## [0.0.12]
+- Remote support
+- Fix codellama prompt preparation
+- Add trigger delay
+- Add jupyter notebooks support
+
 ## [0.0.11]
 - Added Stable Code model
 - Pause download only for specific model instead of all models
