@@ -30,6 +30,7 @@
   "activationEvents": [
     "onStartupFinished"
   ],
+  "extensionKind": ["ui"],
   "main": "./out/extension.js",
   "contributes": {
     "configuration": [
@@ -80,7 +81,7 @@
             "default": 0.2,
             "description": "Temperature of the model. Increasing the temperature will make the model answer more creatively.",
             "order": 3
-          },          
+          },
           "inference.custom.model": {
             "type": "string",
             "default": "",
