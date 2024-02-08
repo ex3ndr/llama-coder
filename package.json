@@ -40,7 +40,7 @@
           "inference.endpoint": {
             "type": "string",
             "default": "",
-            "description": "Ollama Server Endpoint. Empty for local instance.",
+            "description": "Ollama Server Endpoint. Empty for local instance. Example: http://192.168.0.100:11434",
             "order": 1
           },
           "inference.model": {
