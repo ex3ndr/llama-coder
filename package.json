@@ -37,6 +37,21 @@
       {
         "title": "Llama coder",
         "properties": {
+          "notebook.includeMarkup": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include markup cell types in prompt"
+          },
+          "notebook.includeCellOutputs": {
+            "type": "boolean",
+            "default": false,
+            "description": "Include Cell previous output results in the prompt"
+          },
+          "notebook.cellOutputLimit": {
+            "type": "number",
+            "default": 256,
+            "description": "truncate cell output result if exceeds this limit"
+          },
           "inference.endpoint": {
             "type": "string",
             "default": "",
@@ -114,6 +129,14 @@
             "default": 256,
             "description": "Max number of new tokens to be generated.",
             "order": 7
+          },
+          "inference.delay": {
+            "type": "number",
+            "default": 250,
+            "description": "Completion request delay in milliseconds (0 - no delay, -1 - no completions).",
+            "order": 8,
+            "minimum": -1,
+            "maximum": 5000
           }
         }
       }
@@ -126,7 +149,7 @@
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "jest",
-    "package": "vsce package"
+    "package": "npx @vscode/vsce package"
   },
   "devDependencies": {
     "@types/jest": "^29.5.10",

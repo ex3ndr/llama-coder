@@ -35,13 +35,30 @@ class Config {
             }
         }
 
+        let delay = config.get('delay') as number;
+
         return {
             endpoint,
             maxLines,
             maxTokens,
             temperature,
             modelName,
-            modelFormat
+            modelFormat,
+            delay
+        };
+    }
+
+    // Notebook
+    get notebook() {
+        let config = vscode.workspace.getConfiguration('notebook');
+
+        let includeMarkup = config.get('includeMarkup') as boolean;
+        let includeCellOutputs = config.get('includeCellOutputs') as boolean;
+        let cellOutputLimit = config.get('cellOutputLimit') as number;
+        return {
+            includeMarkup,
+            includeCellOutputs,
+            cellOutputLimit,
         };
     }
 

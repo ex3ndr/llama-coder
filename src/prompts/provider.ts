@@ -20,7 +20,21 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
         this.context = context;
     }
 
+    async delayCompletion(delay: number, token: vscode.CancellationToken): Promise<boolean> {
+        if (config.inference.delay < 0) {
+            return false;
+        }
+        await new Promise(p => setTimeout(p, delay));
+        if (token.isCancellationRequested) {
+            return false;
+        }
+        return true;
+    }
+
     async provideInlineCompletionItems(document: vscode.TextDocument, position: vscode.Position, context: vscode.InlineCompletionContext, token: vscode.CancellationToken): Promise<vscode.InlineCompletionItem[] | vscode.InlineCompletionList | undefined | null> {
+        if (!await this.delayCompletion(config.inference.delay, token)) {
+            return;
+        }
 
         try {
 
@@ -66,15 +80,6 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
                     // Config
                     let inferenceConfig = config.inference;
-                    // let config = vscode.workspace.getConfiguration('inference');
-                    // let endpoint = config.get('endpoint') as string;
-                    // let model = config.get('model') as string;
-                    // let maxLines = config.get('maxLines') as number;
-                    // let maxTokens = config.get('maxTokens') as number;
-                    // let temperature = config.get('temperature') as number;
-                    // if (endpoint.endsWith('/')) {
-                    //     endpoint = endpoint.slice(0, endpoint.length - 1);
-                    // }
 
                     // Update status
                     this.statusbar.text = `$(sync~spin) Llama Coder`;

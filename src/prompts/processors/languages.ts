@@ -111,7 +111,7 @@ export const languages: { [key in Language]: LanguageDescriptor } = {
     },
     python: {
         name: 'Python',
-        extensions: ['.py'],
+        extensions: ['.py', 'ipynb'],
         comment: { start: '#' }
     },
     c: {
