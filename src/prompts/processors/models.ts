@@ -19,7 +19,7 @@ export function adaptPrompt(args: { format: ModelFormat, prefix: string, suffix:
     }
 
     // Stable code FIM
-    if (args.format === 'stable-code')  {
+    if (args.format === 'stable-code') {
         return {
             prompt: `<fim_prefix>${args.prefix}<fim_suffix>${args.suffix}<fim_middle>`,
             stop: [`<|endoftext|>`]
@@ -28,7 +28,7 @@ export function adaptPrompt(args: { format: ModelFormat, prefix: string, suffix:
 
     // Codellama FIM
     return {
-        prompt: `<PRE> ${args.prefix} <SUF>${args.suffix} <MID>`,
-        stop: [`<PRE>`, `<SUF>`, `<MID>`, `<END>`]
+        prompt: `<PRE> ${args.prefix} <SUF> ${args.suffix} <MID>`,
+        stop: [`<END>`, `<EOD>`, `<EOT>`]
     };
 }
