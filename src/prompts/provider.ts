@@ -9,15 +9,48 @@ import { ollamaCheckModel } from '../modules/ollamaCheckModel';
 import { ollamaDownloadModel } from '../modules/ollamaDownloadModel';
 import { config } from '../config';
 
+type Status = {
+    icon: string;
+    text: string;
+};
+
 export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
     lock = new AsyncLock();
     statusbar: vscode.StatusBarItem;
     context: vscode.ExtensionContext;
+    private _paused: boolean = false;
+    private _status: Status = { icon: "chip", text: "Llama Coder" };
 
     constructor(statusbar: vscode.StatusBarItem, context: vscode.ExtensionContext) {
         this.statusbar = statusbar;
         this.context = context;
+    }
+    
+    public set paused(value: boolean) {
+        this._paused = value;
+        this.update();
+    }
+
+    public get paused(): boolean {
+        return this._paused;
+    }
+
+    private update(icon?: string, text?: string): void {
+        this._status.icon = icon ? icon : this._status.icon;
+        this._status.text = text ? text : this._status.text;
+
+        let statusText = '';
+        let statusTooltip = '';
+        if (this._paused) {
+            statusText = `$(sync-ignored) ${this._status.text}`;
+            statusTooltip = `${this._status.text} (Paused)`;
+        } else {
+            statusText = `$(${this._status.icon}) ${this._status.text}`;
+            statusTooltip = `${this._status.text}`;
+        }
+        this.statusbar.text = statusText;
+        this.statusbar.tooltip = statusTooltip;
     }
 
     async delayCompletion(delay: number, token: vscode.CancellationToken): Promise<boolean> {
@@ -37,6 +70,9 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
         }
 
         try {
+            if (this.paused) {
+                return;
+            }
 
             // Ignore unsupported documents
             if (!isSupported(document)) {
@@ -82,7 +118,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                     let inferenceConfig = config.inference;
 
                     // Update status
-                    this.statusbar.text = `$(sync~spin) Llama Coder`;
+                    this.update('sync~spin', 'Llama Coder');
                     try {
 
                         // Check model exists
@@ -110,9 +146,9 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                             }
 
                             // Perform download
-                            this.statusbar.text = `$(sync~spin) Downloading`;
+                            this.update('sync~spin', 'Downloading');
                             await ollamaDownloadModel(inferenceConfig.endpoint, inferenceConfig.modelName);
-                            this.statusbar.text = `$(sync~spin) Llama Coder`;
+                            this.update('sync~spin', 'Llama Coder')
                         }
                         if (token.isCancellationRequested) {
                             info(`Canceled after AI completion.`);
@@ -141,7 +177,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                             value: res
                         });
                     } finally {
-                        this.statusbar.text = `$(chip) Llama Coder`;
+                        this.update('chip', 'Llama Coder');
                     }
                 } else {
                     if (cached !== null) {

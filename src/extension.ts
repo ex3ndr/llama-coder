@@ -9,12 +9,12 @@ export function activate(context: vscode.ExtensionContext) {
 	info('Llama Coder is activated.');
 
 	// Create status bar
-	const openSettings = 'llama.openSettings';
-	context.subscriptions.push(vscode.commands.registerCommand(openSettings, () => {
+	context.subscriptions.push(vscode.commands.registerCommand('llama.openSettings', () => {
 		vscode.commands.executeCommand('workbench.action.openSettings', '@ext:ex3ndr.llama-coder');
 	}));
+
 	let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-	statusBarItem.command = openSettings;
+	statusBarItem.command = 'llama.toggle';
 	statusBarItem.text = `$(chip) Llama Coder`;
 	statusBarItem.show();
 	context.subscriptions.push(statusBarItem);
@@ -23,6 +23,17 @@ export function activate(context: vscode.ExtensionContext) {
 	const provider = new PromptProvider(statusBarItem, context);
 	let disposable = vscode.languages.registerInlineCompletionItemProvider({ pattern: '**', }, provider);
 	context.subscriptions.push(disposable);
+
+	context.subscriptions.push(vscode.commands.registerCommand('llama.pause', () => {
+		provider.paused = true;
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('llama.resume', () => {
+		provider.paused = false;
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('llama.toggle', () => {
+		provider.paused = !provider.paused;
+	}));
+
 }
 
 export function deactivate() {
