@@ -1,15 +1,17 @@
-export async function* lineGenerator(url: string, data: any): AsyncGenerator<string> {
-
+export async function* lineGenerator(url: string, data: any, authToken: string): AsyncGenerator<string> {
     // Request
     const controller = new AbortController();
     let res = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-        },
-        signal: controller.signal
-    });
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: authToken ? {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          } : {
+            'Content-Type': 'application/json',
+          },
+      signal: controller.signal,
+    })
     if (!res.ok || !res.body) {
         throw Error('Unable to connect to backend');
     }

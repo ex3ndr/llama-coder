@@ -5,6 +5,7 @@ import { ModelFormat, adaptPrompt } from './processors/models';
 
 export async function autocomplete(args: {
     endpoint: string,
+    bearerToken: string,
     model: string,
     format: ModelFormat,
     prefix: string,
@@ -33,7 +34,7 @@ export async function autocomplete(args: {
     let res = '';
     let totalLines = 1;
     let blockStack: ('[' | '(' | '{')[] = [];
-    outer: for await (let tokens of ollamaTokenGenerator(args.endpoint + '/api/generate', data)) {
+    outer: for await (let tokens of ollamaTokenGenerator(args.endpoint + '/api/generate', data, args.bearerToken)) {
         if (args.canceled && args.canceled()) {
             break;
         }
