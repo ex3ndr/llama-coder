@@ -15,6 +15,7 @@ class Config {
         if (endpoint === '') {
             endpoint = 'http://127.0.0.1:11434';
         }
+        let bearerToken = config.get('bearerToken') as string;
 
         // Load general paremeters
         let maxLines = config.get('maxLines') as number;
@@ -39,6 +40,7 @@ class Config {
 
         return {
             endpoint,
+            bearerToken,
             maxLines,
             maxTokens,
             temperature,
