@@ -1,12 +1,12 @@
-export async function* lineGenerator(url: string, data: any, authToken: string): AsyncGenerator<string> {
+export async function* lineGenerator(url: string, data: any, bearerToken: string): AsyncGenerator<string> {
     // Request
     const controller = new AbortController();
     let res = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
-      headers: authToken ? {
+      headers: bearerToken ? {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${bearerToken}`,
           } : {
             'Content-Type': 'application/json',
           },

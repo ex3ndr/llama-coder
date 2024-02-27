@@ -1,10 +1,10 @@
 import { info } from "./log";
 
-export async function ollamaCheckModel(endpoint: string, model: string, authToken: string) {
+export async function ollamaCheckModel(endpoint: string, model: string, bearerToken: string) {
     // Check if exists
     let res = await fetch(endpoint + '/api/tags', {
-      headers: authToken ? {
-            Authorization: `Bearer ${authToken}`,
+      headers: bearerToken ? {
+            Authorization: `Bearer ${bearerToken}`,
           } : {},
     });
     if (!res.ok) {

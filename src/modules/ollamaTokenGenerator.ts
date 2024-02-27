@@ -7,8 +7,8 @@ export type OllamaToken = {
     done: boolean
 };
 
-export async function* ollamaTokenGenerator(url: string, data: any, authToken: string): AsyncGenerator<OllamaToken> {
-    for await (let line of lineGenerator(url, data, authToken)) {
+export async function* ollamaTokenGenerator(url: string, data: any, bearerToken: string): AsyncGenerator<OllamaToken> {
+    for await (let line of lineGenerator(url, data, bearerToken)) {
         info('Receive line: ' + line);
         let parsed: OllamaToken;
         try {
