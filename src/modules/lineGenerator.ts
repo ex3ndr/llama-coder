@@ -11,7 +11,7 @@ export async function* lineGenerator(url: string, data: any, authToken: string):
             'Content-Type': 'application/json',
           },
       signal: controller.signal,
-    })
+    });
     if (!res.ok || !res.body) {
         throw Error('Unable to connect to backend');
     }
