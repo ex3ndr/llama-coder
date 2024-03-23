@@ -114,7 +114,7 @@
               "codellama",
               "deepseek"
             ],
-            "default": "codellama",
+            "default": "stable-code",
             "description": "Custom model prompt format",
             "order": 5
           },
