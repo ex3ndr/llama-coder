@@ -122,7 +122,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                     try {
 
                         // Check model exists
-                        let modelExists = await ollamaCheckModel(inferenceConfig.endpoint, inferenceConfig.modelName);
+                        let modelExists = await ollamaCheckModel(inferenceConfig.endpoint, inferenceConfig.modelName, inferenceConfig.bearerToken);
                         if (token.isCancellationRequested) {
                             info(`Canceled after AI completion.`);
                             return;
@@ -147,7 +147,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
 
                             // Perform download
                             this.update('sync~spin', 'Downloading');
-                            await ollamaDownloadModel(inferenceConfig.endpoint, inferenceConfig.modelName);
+                            await ollamaDownloadModel(inferenceConfig.endpoint, inferenceConfig.modelName, inferenceConfig.bearerToken);
                             this.update('sync~spin', 'Llama Coder')
                         }
                         if (token.isCancellationRequested) {
@@ -161,6 +161,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
                             prefix: prepared.prefix,
                             suffix: prepared.suffix,
                             endpoint: inferenceConfig.endpoint,
+                            bearerToken: inferenceConfig.bearerToken,
                             model: inferenceConfig.modelName,
                             format: inferenceConfig.modelFormat,
                             maxLines: inferenceConfig.maxLines,

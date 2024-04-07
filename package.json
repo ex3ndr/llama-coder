@@ -76,6 +76,11 @@
             "description": "Ollama Server Endpoint. Empty for local instance. Example: http://192.168.0.100:11434",
             "order": 1
           },
+          "inference.bearerToken": {
+            "type": "string",
+            "default": "",
+            "description": "Auth Bearer token that should be used for secure requests. Leave empty if not desired."
+          },
           "inference.model": {
             "type": "string",
             "enum": [
