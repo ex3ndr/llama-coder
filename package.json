@@ -2,7 +2,7 @@
   "name": "llama-coder",
   "displayName": "Llama Coder",
   "description": "Better and self-hosted Github Copilot replacement",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "icon": "icon.png",
   "publisher": "ex3ndr",
   "repository": {

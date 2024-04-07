@@ -49,6 +49,13 @@ Most of the problems could be seen in output of a plugin in VS Code extension ou
 
 ## Changelog
 
+## [0.0.14]
+- Ability to pause completition (by @bkyle)
+- Bearer token support for remote inference (by @Sinan-Karakaya)
+
+## [0.0.13]
+- Fix remote files support
+
 ## [0.0.12]
 - Remote support
 - Fix codellama prompt preparation
