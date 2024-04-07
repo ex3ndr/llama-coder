@@ -1,6 +1,6 @@
 # Llama Coder
 
-Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio Code. Llama Coder uses [Ollama](https://ollama.ai) and codellama to provide autocomplete that runs on your hardware. Works best with Mac M1/M2/M3 or with RTX 4090.
+Llama Coder is a better and self-hosted Github Copilot replacement for [VS Code](https://github.com/microsoft/vscode). Llama Coder uses [Ollama](https://ollama.ai) and codellama to provide autocomplete that runs on your hardware. Works best with Mac M1/M2/M3 or with RTX 4090.
 
 [VS Code Plugin](https://marketplace.visualstudio.com/items?itemName=ex3ndr.llama-coder)
 
@@ -14,7 +14,7 @@ Llama Coder is a better and self-hosted Github Copilot replacement for VS Studio
 
 Minimum required RAM: 16GB is a minimum, more is better since even smallest model takes 5GB of RAM.
 The best way: dedicated machine with RTX 4090. Install [Ollama](https://ollama.ai) on this machine and configure endpoint in extension settings to offload to this machine.
-Second best way: run on MacBook M1/M2/M3 with enougth RAM (more == better, but 10gb extra would be enougth).
+Second best way: run on MacBook M1/M2/M3 with enough RAM (more == better, but 10gb extra would be enough).
 For windows notebooks: it runs good with decent GPU, but dedicated machine with a good GPU is recommended. Perfect if you have a dedicated gaming PC.
 
 ## Local Installation

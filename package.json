@@ -33,6 +33,24 @@
   "extensionKind": ["ui"],
   "main": "./out/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "llama.openSettings",
+        "title": "Llama Coder: Open Settings"
+      },
+      {
+        "command": "llama.pause",
+        "title": "Llama Coder: Pause"
+      },
+      {
+        "command": "llama.resume",
+        "title": "Llama Coder: Resume"
+      },
+      {
+        "command": "llama.toggle",
+        "title": "Llama Coder: Toggle"
+      }
+    ],
     "configuration": [
       {
         "title": "Llama coder",
@@ -119,7 +137,7 @@
               "codellama",
               "deepseek"
             ],
-            "default": "codellama",
+            "default": "stable-code",
             "description": "Custom model prompt format",
             "order": 5
           },
