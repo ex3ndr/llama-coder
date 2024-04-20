@@ -1,4 +1,4 @@
-export type ModelFormat = 'codellama' | 'deepseek' | 'stable-code';
+export type ModelFormat = 'codellama' | 'deepseek' | 'stable-code' | 'codegemma';
 
 export function adaptPrompt(args: { format: ModelFormat, prefix: string, suffix: string }): { prompt: string, stop: string[] } {
 
@@ -26,6 +26,13 @@ export function adaptPrompt(args: { format: ModelFormat, prefix: string, suffix:
         };
     }
 
+    // Codegemma FIM
+    if (args.format === 'codegemma') {
+        return {
+            prompt: `<|fim_prefix|>${args.prefix}<|fim_suffix|>${args.suffix}<|fim_middle|>`,
+            stop: ['<|file_separator|>']
+        }
+    }
     // Codellama FIM
     return {
         prompt: `<PRE> ${args.prefix} <SUF> ${args.suffix} <MID>`,
