@@ -33,6 +33,8 @@ class Config {
                 modelFormat = 'deepseek';
             } else if (modelName.startsWith('stable-code')) {
                 modelFormat = 'stable-code';
+            } else if (modelName.startsWith('codegemma')) {
+                modelFormat = 'codegemma';
             }
         }
 
