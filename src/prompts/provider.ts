@@ -26,7 +26,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
         this.statusbar = statusbar;
         this.context = context;
     }
-    
+
     public set paused(value: boolean) {
         this._paused = value;
         this.update();
@@ -65,7 +65,7 @@ export class PromptProvider implements vscode.InlineCompletionItemProvider {
     }
 
     async provideInlineCompletionItems(document: vscode.TextDocument, position: vscode.Position, context: vscode.InlineCompletionContext, token: vscode.CancellationToken): Promise<vscode.InlineCompletionItem[] | vscode.InlineCompletionList | undefined | null> {
-        if (!await this.delayCompletion(config.inference.delay, token)) {
+        if (context.triggerKind !== vscode.InlineCompletionTriggerKind.Invoke && !await this.delayCompletion(config.inference.delay, token)) {
             return;
         }
 

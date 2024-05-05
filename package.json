@@ -156,7 +156,7 @@
           "inference.delay": {
             "type": "number",
             "default": 250,
-            "description": "Completion request delay in milliseconds (0 - no delay, -1 - no completions).",
+            "description": "Completion request delay in milliseconds (0 - no delay, -1 - no automatic completions).",
             "order": 8,
             "minimum": -1,
             "maximum": 5000
