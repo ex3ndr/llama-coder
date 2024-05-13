@@ -27,7 +27,7 @@ class Config {
         let modelFormat: ModelFormat = 'codellama';
         if (modelName === 'custom') {
             modelName = config.get('custom.model') as string;
-            modelFormat = config.get('cutom.format') as ModelFormat;
+            modelFormat = config.get('custom.format') as ModelFormat;
         } else {
             if (modelName.startsWith('deepseek-coder')) {
                 modelFormat = 'deepseek';
